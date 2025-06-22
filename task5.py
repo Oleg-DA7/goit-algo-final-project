@@ -36,9 +36,9 @@ def draw_tree(tree_root, title="Tree Traversal"):
     labels = {node[0]: node[1]['label'] for node in tree.nodes(data=True)}
     return tree, pos, colors, labels, title
 
-def get_gradient_color(index, total_steps):
-    start_rgb = (70, 70, 140)  # #000066
-    end_rgb = (153, 204, 255)  # #99CCFF
+def get_color(index, total_steps):
+    start_rgb = (70, 140, 70)  
+    end_rgb = (140, 255, 140)  
     ratio = index / (total_steps - 1) if total_steps > 1 else 1
     r = int(start_rgb[0] + (end_rgb[0] - start_rgb[0]) * ratio)
     g = int(start_rgb[1] + (end_rgb[1] - start_rgb[1]) * ratio)
@@ -91,11 +91,8 @@ def animate_traversal(root, t_type="dfs"):
     ax.axis('off')
 
     def update(frame):
-        ax.clear()
-        ax.set_title(f"{t_type.upper()} Traversal")
-        ax.axis('off')
         if frame < total_steps:
-            order[frame].color = get_gradient_color(frame, total_steps)
+            order[frame].color = get_color(frame, total_steps)
         tree, pos, colors, labels, _ = draw_tree(root)
         nx.draw(tree, pos=pos, labels = labels, arrows = False, node_size = 2100, node_color = colors, ax = ax)
         return []
